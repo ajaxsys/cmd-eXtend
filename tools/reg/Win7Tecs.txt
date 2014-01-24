@@ -1,0 +1,44 @@
+0 Maven cant not download from FTP
+
+Windows7の管理者cmdにで、下記のコマンドを実行すればOKです：
+
+     netsh advfirewall set global StatefulFTP disable
+
+
+
+1 Windows7 Username Not display when login,
+  Change below from 1 to 0:
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\DontDisplayLastUserName=0
+
+
+
+
+2  Windows 7 local shortcuts "do you want to open this file" warning 
+Simple solution:
+it does seem stupid, but so is windows 7;
+instead of copying the link from anywhere to the quick launch bar,
+make a link on your desktop, rename it as you want and then drag and drop holding the shift button so it will move the link.
+Like that, windows already know the source of the link and won't tag it like potentially dangerous.
+
+
+
+
+
+
+3 Windows Explorer Defaults to Libraries Folder in Windows 7
+
+To change the startup folder to (My) Computer, use this target path:
+explorer.exe ::{20D04FE0-3AEA-1069-A2D8-08002B30309D}
+
+Where the GUID {20D04FE0-3AEA-1069-A2D8-08002B30309D} represents the My Computer folder.
+
+For Documents folder, use this target path:
+explorer.exe ::{450D8FBA-AD25-11D0-98A8-0800361B1103}
+
+You may also suffix the full path instead of using GUID. For example,
+explorer.exe D:\Scripts
+
+
+
+

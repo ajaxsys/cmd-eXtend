@@ -1,0 +1,7 @@
+selectword
+
+$seltext = gettext(seltopx,seltopy,selendx,selendy);
+//message $seltext;
+
+if ($seltext != "" )
+	searchup2 $seltext ,hilight ,casesense ,noregular,word

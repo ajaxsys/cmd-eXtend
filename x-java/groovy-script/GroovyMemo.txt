@@ -1,0 +1,4 @@
+Groovy memo
+
+1  Not replace , use replaceAll
+2  Not var name "in"

@@ -1,0 +1,1 @@
+start "svc" services.msc
