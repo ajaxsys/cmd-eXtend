@@ -8,7 +8,7 @@ SET SEARCH_ENGINE=http://www.google.co.jp/search?hl^=ja^&q^=
 
 REM Define your own maven repo (Needed in x-java).
 REM SET M2_REPO=%USERPROFILE%\.m2\repository\
-SET M2_REPO=%~dp0x-java\java\target\dependency
+SET M2_REPO=%~dp0x-java\java\dependency
 
 REM Define your own groovy env (Needed in x-java).
 SET GROOVY_ALL=%M2_REPO%\groovy-all-2.0.0.jar
