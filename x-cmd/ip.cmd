@@ -1,4 +1,5 @@
 @ECHO OFF
 
-ipconfig /all | findstr "Physical Address Mask Servers Gateway"
+ipconfig /all 
+
 pause

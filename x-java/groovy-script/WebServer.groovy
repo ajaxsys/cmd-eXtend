@@ -23,26 +23,30 @@ try {
 workspace = new File(".").getCanonicalPath()
 println "Root directory: $workspace"
 println "Waiting for connection"
-for (;;) {
+while (true) {
+	// wait for a connection
+	Socket remote = s.accept()
+	// remote is now the connected socket
+	def input = new BufferedReader(new InputStreamReader(remote.getInputStream()))
+	def ostream = remote.getOutputStream() // java.net.SocketOutputStream
+	def otext = new BufferedWriter(new OutputStreamWriter(ostream))
+
 	try {
-		// wait for a connection
-		Socket remote = s.accept()
-		// remote is now the connected socket
-		def input = new BufferedReader(new InputStreamReader(remote.getInputStream()))
-		def ostream = remote.getOutputStream() // java.net.SocketOutputStream
-		def otext = new BufferedWriter(new OutputStreamWriter(ostream))
 
 		// read the data sent. We basically ignore it,
 		// stop reading once a blank line is hit. This
 		// blank line signals the end of the client HTTP
 		// headers.
 		def header = getReqHeader(input)
-		//print header
+		if ("".equals(header)) {
+			// fix firefox bugs? of last empty request
+			throw new RuntimeException("Socket closed.")
+		}
 		def uri = getURI(header)
 
 		println "======================"
 		println header // log
-		
+
 		if (existURI(uri)){
 			def mime= Util.getMIMEByFilePath(uri)
 			printOKResHeader(otext, mime)
@@ -55,17 +59,21 @@ for (;;) {
 			otext.flush()
 			println "404 - Path=$uri"
 		}
+
 		// Send the response
 		// Send the headers
 		println "======================"
 
-		// close
-		input.close()
-		otext.close()
-		remote.close()
-
+	
 	} catch (Exception e) {
-		e.printStackTrace()
+		showMemory()
+		println e.getMessage()
+	} finally {
+		// close
+		otext.close()
+		ostream.close()
+		input.close()
+		remote.close()
 	}
 }
 
@@ -83,11 +91,11 @@ private boolean existURI(uri) {
 }
 
 private String getReqHeader(input){
-	def sb = new StringBuilder()
-	String str = "."
-	while (!str.equals("")) {
-		str = input.readLine()
+	def sb = new StringBuilder("")
+	String str = input.readLine()
+	while (str!=null && !"".equals(str)) {
 		sb.append( str + "\n" )
+		str = input.readLine()
 	}
 	return sb.toString()
 }
@@ -111,11 +119,26 @@ private void print404ResHeader(out){
 
 }
 
+private void showMemory(){
+
+	int mb = 1024*1024;
+
+	//Getting the runtime reference from system
+	Runtime runtime = Runtime.getRuntime();
+
+	//Print used memory
+	println "    Used Memory:" + (runtime.totalMemory() - runtime.freeMemory()) / mb + "M"
+ 	//Print free memory
+	println "    Free Memory:" + runtime.freeMemory() / mb + "M"
+	//Print total available memory
+	println "   Total Memory:" + runtime.totalMemory() / mb + "M"
+	//Print Maximum available memory
+	println "     Max Memory:" + runtime.maxMemory() / mb + "M"
+
+}
+
 // eg. : "GET /test.html?a=b#ccc HTTP/1.1" to get "./test.html"
 private String getURI(header) {
 	def finder = (   header =~     /GET.*|POST.*|PUT.*|DELETE.*/    )
-	if (finder.count > 0)
-		return "."+finder[0].replaceAll(/^\w+ /,"").replaceAll(/ .*/,"").replaceAll(/\?.*|#.*/,"")
-	else
-		return "" 
+	return (finder.count > 0) ? "."+finder[0].replaceAll(/^\w+ /,"").replaceAll(/ .*/,"").replaceAll(/\?.*|#.*/,"") : "" 
 }

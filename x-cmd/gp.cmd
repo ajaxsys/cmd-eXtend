@@ -1,4 +1,6 @@
 @ECHO OFF
+Echo Only support windows XP. for Windows Vista + , use "Shift + RightClick" to copy path
+
 call cmdx-config.cmd
 REM FOR /F "usebackq delims=" %%i in (`cscript //Nologo "%~dp0\..\tools\vbs\GetPath.js"`) DO SET RESULT_FILE=%%i
 

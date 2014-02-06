@@ -1,7 +1,7 @@
 //////////////////////★ソート順：パス　が必須★////////////////////////////////
-def LIST = "\n"+new File("D:/tmp/eList.txt").getText()+"\n" // Copy from eclipse search result: list view
-def TREE = "\n"+new File("D:/tmp/eTree.txt").getText()+"\n" // Copy from eclipse search result: tree view
-def Rslt = new File("D:/tmp/eResult.txt")
+def LIST = "\n"+new File("D:/tmp/list.txt").getText()+"\n" // Copy from eclipse search result: list view
+def TREE = "\n"+new File("D:/tmp/tree.txt").getText()+"\n" // Copy from eclipse search result: tree view
+def Rslt = new File("D:/tmp/result.txt")
 
 // Avoid project test-cmn > test.(Diff with tree view)
 LIST=LIST.replaceAll('/',"\t")

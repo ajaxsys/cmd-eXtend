@@ -1,7 +1,6 @@
 //////////////////////★ソート順：パス　が必須★////////////////////////////////
-def LIST = new File("D:/tmp/uList.txt").getText() // Copy from eclipse call hierarchy result: ルートで右クリック⇒展開された階層をコピー
-def TREE = new File("D:/tmp/uTree.txt").getText() // Copy from eclipse call hierarchy result: ctrl+Aで右クリック⇒修飾名のコピー
-def Rslt = new File("D:/tmp/uResult.txt")
+def TREE = new File("D:/tmp/tree.txt").getText() // Copy from eclipse call hierarchy result: ルートで右クリック⇒展開された階層をコピー
+def Rslt = new File("D:/tmp/tree_result.txt")
 
 // Replace LIST with TREE \t
 def TreeLines=TREE.split("\n")
@@ -15,11 +14,19 @@ TreeLines.each{
 
 // format list
 def RsltText = new StringBuilder()
-LIST.split("\n").eachWithIndex{line , i ->
+def rootCounter = 0
+TREE.split("\n").eachWithIndex{line , i ->
+    line=line.replaceAll(/^\t*/,'');
     if (line.length() > 1) {
         def tabs = TreeLines[i].find(/^\t*/)
         def subTabs=maxTabs.length()-tabs.length()+1
-        RsltText.append(tabs).append("■").append("\t"*subTabs).append(line).append("\n")
+        
+        def rootCounterAppend='\t'
+        if (tabs.length()==0){
+        	rootCounter++
+        	rootCounterAppend = rootCounter + rootCounterAppend
+        }
+        RsltText.append(rootCounterAppend).append(tabs).append("■").append("\t"*subTabs).append(line).append("\n")
     }
 }
 

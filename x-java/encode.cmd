@@ -1,8 +1,7 @@
 @echo off
 call cmdx-config.cmd
 
-set need_jar=%M2_REPO%\commons-codec\commons-codec\1.5\commons-codec-1.5.jar
-if not exist "%need_jar%" (
+if not exist "%CODEC_JAR%" (
 	ECHO [WARN] Need commons-codec.jar. 
 	ECHO Download from http://repo1.maven.org/maven2/commons-codec/commons-codec/1.5/commons-codec-1.5.jar
 	ECHO ^<dependency^>
@@ -27,8 +26,31 @@ if "%4" EQU "" (
 	set output=%4
 )
 
-set SS_PATH=%~dp0%\encode\SS.jar
-java -classpath "%need_jar%;%SS_PATH%;" encrypt.SS %option% %password% %input% %output%
+REM encript & base64
+set USAGE1=Usage: encode password input.bin base64.txt
+REM decode base64 & decript
+set USAGE2=Usage: encode -d password base64.txt output.bin
+REM encript only
+set USAGE3=Other: encode -ec password input.bin ouput.bin
+REM decript only
+set USAGE4=Other: encode -dc password input.bin ouput.bin
+REM encode base64 only
+set USAGE5=Other: encode -eb password input.bin base64.txt     REM * password no use, but need
+REM decode base64 only
+set USAGE6=Other: encode -db password base64.txt ouput.bin     REM * password no use, but need
+
+if [%output%] EQU [] (
+	echo %USAGE1%
+	echo %USAGE2%
+	echo %USAGE3%
+	echo %USAGE4%
+	echo %USAGE5%
+	echo %USAGE6%
+	goto end
+)
+
+set SS_PATH=%~dp0%\java\cmdx.jar
+java -classpath "%CODEC_JAR%;%SS_PATH%;" encrypt.SS %option% %password% %input% %output%
 
 
 REM for %%i in (lib\*.jar) do @call :addjar %%i

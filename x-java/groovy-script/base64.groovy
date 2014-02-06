@@ -35,7 +35,7 @@ def USAGE="""Usage :
 
 	// Decoding file from base64
 	if (isDecript) {
-		def decodedBytes = inputFile.getText().decodeBase64()
+		def decodedBytes = inputFile.getText().replaceAll(/\n|\r/,"").decodeBase64()
 		new File(output).setBytes(decodedBytes)
 		return new String(decodedBytes)
 	}

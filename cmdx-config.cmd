@@ -8,11 +8,14 @@ SET SEARCH_ENGINE=http://www.google.co.jp/search?hl^=ja^&q^=
 
 REM Define your own maven repo (Needed in x-java).
 REM SET M2_REPO=%USERPROFILE%\.m2\repository\
-SET M2_REPO=C:\Documents and Settings\Administrator\.m2\repository
+SET M2_REPO=%~dp0x-java\java\target\dependency
 
 REM Define your own groovy env (Needed in x-java).
-REM SET GROOVY_ALL=%M2_REPO%org\codehaus\groovy\groovy-all\2.0.0\groovy-all-2.0.0.jar
-SET GROOVY_ALL=%GROOVY_HOME%
+SET GROOVY_ALL=%M2_REPO%\groovy-all-2.0.0.jar
+SET CODEC_JAR=%M2_REPO%\commons-codec-1.5.jar
 
 REM Define your derby path.
 SET DERBY_INSTALL=C:\jdk1.7.0-b66\db
+
+REM Use memory
+SET JAVA_OPTS=-Xms128m -Xmx512m

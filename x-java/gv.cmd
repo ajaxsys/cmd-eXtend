@@ -8,17 +8,7 @@ if not exist "%GROOVY_ALL%" (
 	GOTO END
 )
 
-pushd %~f0\..\
-
-start "gv" java -cp "%GROOVY_ALL%";. groovy/GroovyConsole
-
-
-REM POM.XML:
-REM 		<dependency>
-REM 			<groupId>org.codehaus.groovy</groupId>
-REM 			<artifactId>groovy-all</artifactId>
-REM 			<version>2.0.0</version>
-REM 		</dependency>
-REM 
+set cmdXJar=%~dp0java\cmdx.jar
+start "gv" java -cp "%GROOVY_ALL%;%cmdXJar%";. groovy/GroovyConsole
 
 :END

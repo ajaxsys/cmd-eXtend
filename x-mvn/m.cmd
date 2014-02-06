@@ -1,2 +1,2 @@
 set MAVEN_OPTS="-Xmx512m"
-mvn clean package -Plocal -Dmaven.test.skip=true %1
+mvn clean package -Plocal -Dmaven.test.skip=true %*

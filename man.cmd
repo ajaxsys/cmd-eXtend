@@ -18,9 +18,10 @@ set HELP_FILE=%~dp0doc\%1.txt
 IF NOT EXIST "%HELP_FILE%" (
 	REM ECHO Help of command "%1" is not existed.
 	REM Set result of findstr to var
-	for /f "usebackq tokens=*" %%i in (`type "%~dp0readme.txt" ^| findstr %1.cmd `) do @set TT=%%i
-        REM Replace space to empty
-	echo %TT: =%
+	type "%~dp0readme.txt" | findstr %1.cmd
+REM	for /f "usebackq tokens=*" %%i in (`type "%~dp0readme.txt" ^| findstr %1.cmd `) do @set TT=%%i
+REM	REM Replace space to empty
+REM	echo %TT: =%
 	GOTO END
 ) 
 
