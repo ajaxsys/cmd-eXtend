@@ -18,7 +18,7 @@ if not exist %1 (
 	GOTO END
 )
 
-set GV_PATH=%~dp0java\cmdx.jar;%~dp0groovy-script\
+set GV_PATH=%~dp0java\target\cmdx.jar;%~dp0groovy-script\
 java -cp "%GROOVY_ALL%;%GV_PATH%;" %JAVA_OPTS% groovy/Groovysh %*
 
 REM POM.XML

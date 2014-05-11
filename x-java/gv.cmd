@@ -8,7 +8,7 @@ if not exist "%GROOVY_ALL%" (
 	GOTO END
 )
 
-set cmdXJar=%~dp0java\cmdx.jar
+set cmdXJar=%~dp0java\target\cmdx.jar
 start "gv" java -cp "%GROOVY_ALL%;%cmdXJar%";. groovy/GroovyConsole
 
 :END

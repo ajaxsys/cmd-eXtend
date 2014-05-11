@@ -49,7 +49,7 @@ if [%output%] EQU [] (
 	goto end
 )
 
-set SS_PATH=%~dp0%\java\cmdx.jar
+set SS_PATH=%~dp0%\java\target\cmdx.jar
 java -classpath "%CODEC_JAR%;%SS_PATH%;" encrypt.SS %option% %password% %input% %output%
 
 

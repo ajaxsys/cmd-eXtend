@@ -1,0 +1,42 @@
+##Start svn server on windows
+
+#1.Download from:
+http://www.collab.net/jp/downloads/subversion
+e.g: Subversion 1.8.8 (Windows 64-bit)
+U/P: andyfdh/gm/birth
+
+#2.Install
+
+#3.Config as a service:
+
+cmd with admin mode
+C:\> sc delete svnserve
+C:\> sc create svnserve binpath="\"D:\Program Files\Subversion client\svnserve.exe\" --listen-port=3690 --service --root D:\SVN_REPO" displayname="SVN_CMDX" depend=tcpip start=auto
+C:\> net stop svnserve
+C:\> net start svnserve
+
+#4.Access
+access in Tortorse SVN repo browser:    
+  svn://localhost
+  OR
+  svn://myIP
+
+
+#5.Set firewall config in windows controls
+Enable D:\Program Files\Subversion client\svnserve.exe internet access
+
+#6.Set users
+Create a users file and realm
+
+For now, the [general] section of svnserve.conf has all the variables you need. Begin by changing the values of those variables: choose a name for a file that will contain your usernames and passwords and choose an authentication realm:
+
+[general]
+password-db = userfile
+realm = example realm
+
+The realm is a name that you define. It tells clients which sort of Ågauthentication namespaceÅh they're connecting to; the Subversion client displays it in the authentication prompt and uses it as a key (along with the server's hostname and port) for caching credentials on disk (see the section called ÅgCaching credentialsÅh). The password-db variable points to a separate file that contains a list of usernames and passwords, using the same familiar format. For example:
+
+[users]
+harry = foopassword
+sally = barpassword
+
