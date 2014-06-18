@@ -1,1 +1,1 @@
-call "D:\cmd-eXtend\x-java\groovy-script\eclipse_callhierarchy_result_merge.cmd"
+call "%~dp0\groovy-script\eclipse_callhierarchy_result_merge.cmd"
