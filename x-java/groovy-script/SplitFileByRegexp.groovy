@@ -35,15 +35,19 @@ if (f.exists()){
     
     f.eachLine {ln -> 
         m = ln =~ regexp
-        //print m.size()
+
         if ( m.size() > 0  ) {
-            def month
-            if (fileNameGroupNo > m[0].length) {
-                month = "exist"
+            // println  m[0]
+            // println  m[0].getClass()
+            def matched = m[0]
+            // No group in regexp
+            if (matched instanceof String) {
+                splitFileName = "exist"
             } else {
-                month = m[0][fileNameGroupNo];
+                // With groups
+                splitFileName = m[0][fileNameGroupNo];
             }
-            output("split_" + month, ln)
+            output("split_" + splitFileName, ln)
         } else {
             output("split_not_exist", ln)
         }
