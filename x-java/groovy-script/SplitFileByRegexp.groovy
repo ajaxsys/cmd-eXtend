@@ -1,16 +1,26 @@
 // 正規表現で分割
 // 使用例、月単位でPostgres結果の年月日「| 20140101 」を分割：
 //     gsh bunkatu.groovy step2_fixed.sql_out_sample "\| (201[0-9]{3})([0-9]{2}) "
-// 注意：正規表現のGroup 1はファイル名となる
+// 注意1：正規表現のGroup 1はファイル名となる。Group 1存在しないと、デフォルト「split_exist.txt」となる
+// 
+// 正規表現が長すぎると、「file=」付きで、ファイルよりパラメータ設定可能、使用例：
+//     gsh bunkatu.groovy step2_fixed.sql_out_sample file=regexp.txt
 
 import groovy.transform.Field
 
 if (args.length < 2){
-    println 'Usage: gsh thisScript inputFile "Regexp(FileName)String" [int_FileNameGroupNo]'
+    println 'Usage: gsh thisScript inputFile "Regexp(FileName)String|file=filePath" [int_FileNameGroupNo]'
     return 
 }
 def f = new File(args[0])
 def regexp = args[1]
+
+// Support long regexp read from File
+if (regexp.startsWith("file=")) {
+	def inputFileRegExp = new File(regexp.split("=")[1])
+	if (inputFileRegExp.exists())
+		regexp = inputFileRegExp.getText()
+}
 def fileNameGroupNo = 1
 
 if (args.length > 2){
@@ -27,7 +37,12 @@ if (f.exists()){
         m = ln =~ regexp
         //print m.size()
         if ( m.size() > 0  ) {
-            def month = m[0][fileNameGroupNo];
+            def month
+            if (fileNameGroupNo > m[0].length) {
+                month = "exist"
+            } else {
+                month = m[0][fileNameGroupNo];
+            }
             output("split_" + month, ln)
         } else {
             output("split_not_exist", ln)
