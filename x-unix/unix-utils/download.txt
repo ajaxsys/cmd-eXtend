@@ -1,0 +1,2 @@
+download & unzip to parent [/x-unix] forlder:
+http://sourceforge.net/projects/unxutils/
