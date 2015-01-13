@@ -1,7 +1,9 @@
 import static C.*
 
+// TODO:vm-format: Macro次の1行目はFormat不要！！！
+
 class C {
-    static final beginTag=["#if", "#while", "#foreach"] // indent +1
+    static final beginTag=["#if", "#while", "#foreach", "#macro"] // indent +1
     static final midTag=["#elseif", "#else"]  // indent keep
     static final endTag=["#end"] // indent -1
     
@@ -43,10 +45,11 @@ class C {
         def NEW_LINE="\$LF"
         
         if (depth<1) depth=1
+	def indent = depth-1
         
-        //println "-----" + FOUR_TABS.multiply(depth-1) + line.trim() + ( line.endsWith(NEW_LINE) ? "" : (FOUR_TABS+NEW_LINE) ) + "\n"
-        return FOUR_TABS.multiply(depth-1) + line.trim() + 
-            (line.endsWith(NEW_LINE) ? "" : (FOUR_TABS+NEW_LINE)) +
+        //println "-----" + FOUR_TABS.multiply(indent) + line.trim() + ( line.endsWith(NEW_LINE) ? "" : (FOUR_TABS+NEW_LINE) ) + "\n"
+        return FOUR_TABS.multiply(indent) + line.trim() + 
+            ( (indent<=0 || line.endsWith(NEW_LINE)) ? "" : (FOUR_TABS+NEW_LINE) ) +
             "\n"
     }
 }
@@ -107,5 +110,5 @@ dir.eachFileRecurse({f->
     })
 
     //output it
-    f.setText(targetText)
+    f.setText(targetText, 'UTF-8')
 })
