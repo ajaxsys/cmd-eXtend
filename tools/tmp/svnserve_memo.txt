@@ -11,7 +11,11 @@ U/P: andyfdh/gm/birth
 
 cmd with admin mode
 C:\> sc delete svnserve
-C:\> sc create svnserve binpath="\"D:\Program Files\Subversion client\svnserve.exe\" --listen-port=3690 --service --root D:\SVN_REPO" displayname="SVN_CMDX" depend=tcpip start=auto
+C:\> sc create svnserve binpath="\"D:\Program Files\Subversion client\svnserve.exe\" --listen-port=3690 --service --root D:\SVN_REPO"    displayname= "SVN_CMDX" depend= tcpip start= auto
+
+*TortoiseSVN:
+
+     sc create svnserve binpath= "\"C:\Program Files\TortoiseSVN\bin\svnserve.exe\"  --listen-port=3690 --service --root D:\dev\SVN_RCV" displayname= "SVN_RCV"  depend= tcpip start= auto
 C:\> net stop svnserve
 C:\> net start svnserve
 

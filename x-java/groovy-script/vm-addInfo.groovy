@@ -24,7 +24,14 @@ dir.eachFileRecurse({f->
     
     f.eachLine('UTF-8', {line, num->
     
-      if (line.trim().startsWith("#") || ''.equals(line.trim()) ){
+    //if (line.trim().startsWith("#") || ''.equals(line.trim()) ){
+    //if (''.equals(line.trim()) ){
+    if ((!line.trim().startsWith("#if")  &&
+         !line.trim().startsWith("#else") &&
+         !line.trim().startsWith("#foreach") &&
+         line.trim().startsWith("#"))
+      || ''.equals(line.trim())  ){
+
           //println "ignored : " + line
           // println "blank line"
           targetText += line+"\n"
